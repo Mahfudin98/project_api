@@ -22,7 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
+Route::get('/channel', [ChannelController::class, 'getDataRs'])->name('channel');
+Route::get('/channels/api/access_key={apikey}', [ChannelController::class, 'getDataRs'])->middleware('ApiKey');
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::get('/channel', [ChannelController::class, 'getDataRs'])->name('channel');
+    // Route::get('/channel', [ChannelController::class, 'getDataRs'])->name('channel');
 });
