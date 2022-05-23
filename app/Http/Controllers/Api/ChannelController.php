@@ -32,10 +32,10 @@ class ChannelController extends Controller
 
     public function storeDataRs(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-        ]);
+        // $validated = $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'address' => 'required|string|max:255',
+        // ]);
 
         $header = $request->header('API-KEY-TEST');
 
@@ -48,10 +48,10 @@ class ChannelController extends Controller
             } else {
                 try {
                     $channel = Channel::create([
-                        'name_channel' => $request->name,
-                        'channel_address' => $request->address,
+                        'name_channel' => $request->NAMECHANELL,
+                        'channel_address' => $request->CHANNELADDR,
                     ]);
-                    $response["GetDataRq"] = $channel;
+                    $response["GetDataRs"] = $channel;
                     $response["status"] = 1;
                     return response()->json($response);
                 } catch (\Throwable $e) {
