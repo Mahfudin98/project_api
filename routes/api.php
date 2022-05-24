@@ -20,12 +20,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/login', [LoginController::class, 'login'])->name('login');
+// Route::post('/login', [LoginController::class, 'login'])->name('login');
 
-Route::get('/apiv1/channel', [ChannelController::class, 'getDataRs'])->name('channel.get');
+Route::middleware('ApiKey')->post('/apiv1/channel', [ChannelController::class, 'filterData'])->name('channel.filter');
+Route::middleware('ApiKey')->get('/apiv1/channel/get', [ChannelController::class, 'getDataRs'])->name('channel.get');
 Route::post('apiv1/channel/post', [ChannelController::class, 'storeDataRs'])->name('channel.post');
-Route::get('/channels/api/access_key={apikey}', [ChannelController::class, 'getDataRs'])->middleware('ApiKey');
-Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    // Route::get('/channel', [ChannelController::class, 'getData'])->name('channel');
-});
+// Route::get('/channels/api/access_key={apikey}', [ChannelController::class, 'getDataRs'])->middleware('ApiKey');
+// Route::group(['middleware' => 'auth:sanctum'], function () {
+//     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+//     // Route::get('/channel', [ChannelController::class, 'getData'])->name('channel');
+// });

@@ -8,6 +8,7 @@ use App\Models\Channel;
 use App\Models\UserAccessKey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 
 class ChannelController extends Controller
 {
@@ -27,6 +28,23 @@ class ChannelController extends Controller
                 $response["status"] = 1;
                 return response()->json($response);
             }
+        }
+    }
+
+    public function filterData(Request $request)
+    {
+        $bodyContent = $request->getContent();
+        $collection = json_decode($bodyContent, true);
+        $channel = Channel::where('id_channel', $collection['GetDataRq']['IDCHANELL'])->first();
+
+        if ($channel != null) {
+            $response["GetDataRq"] = $channel;
+            $response["status"] = 1;
+            return response()->json($response);
+        } else {
+            $response["status"] = 0;
+            $response["ERR_MESSAGE"] = "Data Kosong";
+            return response()->json($response);
         }
     }
 
@@ -61,14 +79,10 @@ class ChannelController extends Controller
                 }
             }
         }
-
     }
 
-    public function getData()
-    {
-        $channel = Channel::all();
-            $response["channel"] = $channel;
-            $response["status"] = 1;
-            return response()->json($response);
-    }
+    // public function filterData(Request $request)
+    // {
+
+    // }
 }
