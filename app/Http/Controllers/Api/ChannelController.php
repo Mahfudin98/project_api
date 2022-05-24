@@ -35,15 +35,22 @@ class ChannelController extends Controller
     {
         $bodyContent = $request->getContent();
         $collection = json_decode($bodyContent, true);
-        $channel = Channel::where('id_channel', $collection['GetDataRq']['IDCHANELL'])->first();
-
-        if ($channel != null) {
-            $response["GetDataRq"] = $channel;
-            $response["status"] = 1;
+        $channel = Channel::where('id_channel', $collection['GetDataRq']['IDCHANELL'])->where('created_at', $collection['GetDataRq']['TRNDATE '])->first();
+        $result = [];
+        if ($channel == null or $collection == null) {
+            $result[] = [
+                'STATUS' => "0",
+                'ERR_MESSAGE' => "Data Kosong"
+            ];
+            $response["GetDataRs"] = $result;
             return response()->json($response);
         } else {
-            $response["status"] = 0;
-            $response["ERR_MESSAGE"] = "Data Kosong";
+            $result[] = [
+                'NAMECHANELL' => $channel['name_channel'],
+                'CHANNELADDR' => $channel['channel_address'],
+                'STATUS' => "1"
+            ];
+            $response["GetDataRs"] = $result;
             return response()->json($response);
         }
     }
