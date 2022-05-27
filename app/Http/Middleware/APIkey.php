@@ -20,13 +20,23 @@ class APIkey
         // if (!$request->isMethod('get')) return $next($request);
 
         $header = $request->header('API-KEY-TEST');
-
+        $result = [];
         if ($header == '') {
-            return abort('403');
+            $result[] = [
+                'STATUS' => "403",
+                'ERR_MESSAGE' => "Forbidden"
+            ];
+            $response["GetDataRs"] = $result;
+            return response()->json($response);
         } else {
             $key = "12345667890X";
             if ($header != $key) {
-                return abort('403');
+                $result[] = [
+                    'STATUS' => "403",
+                    'ERR_MESSAGE' => "Forbidden"
+                ];
+                $response["GetDataRs"] = $result;
+                return response()->json($response);
             } else {
                 return $next($request);
             }
