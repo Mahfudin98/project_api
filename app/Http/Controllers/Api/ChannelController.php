@@ -35,7 +35,7 @@ class ChannelController extends Controller
     {
         $bodyContent = $request->getContent();
         $collection = json_decode($bodyContent, true);
-        $channel = Channel::where('id_channel', $collection['GetDataRq']['IDCHANELL'])->where('created_at', $collection['GetDataRq']['TRNDATE '])->first();
+        $channel = Channel::where('id_channel', $collection['GetDataRq']['IDCHANELL'])->where('created_at', $collection['GetDataRq']['TRNDATE'])->first();
         $result = [];
         if ($channel == null or $collection == null) {
             $result[] = [
