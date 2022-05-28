@@ -23,8 +23,7 @@ class APIkey
         $result = [];
         if ($header == '') {
             $result[] = [
-                'STATUS' => "403",
-                'ERR_MESSAGE' => "Forbidden"
+                'STATUS' => "403 Forbidden",
             ];
             $response["GetDataRs"] = $result;
             return response()->json($response);
@@ -32,8 +31,7 @@ class APIkey
             $key = "12345667890X";
             if ($header != $key) {
                 $result[] = [
-                    'STATUS' => "403",
-                    'ERR_MESSAGE' => "Forbidden"
+                    'STATUS' => "403 Forbidden",
                 ];
                 $response["GetDataRs"] = $result;
                 return response()->json($response);
